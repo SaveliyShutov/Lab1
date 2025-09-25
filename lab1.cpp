@@ -367,87 +367,6 @@ int findLast(int arr[], int size, int x) {
     return -1;
 }
 
-// 4. Добавление в массив.
-// Дана сигнатура функции: int * add (int arr[], int x, int pos);
-// Необходимо реализовать функцию таким образом, чтобы она возвращала новый
-// массив, который будет содержать все элементы массива arr, однако в позицию pos
-// будет вставлено значение x.
-// Пример:
-// arr=[1,2,3,4,5]
-// x=9
-// pos=3
-// результат: [1,2,3,9,4,5]
-
-int* add(int arr[], int size, int x, int pos) {
-    int* newArr = new int[size + 1];
-    for (int i = 0; i < pos; i++) {
-        newArr[i] = arr[i];
-    }
-    newArr[pos] = x;
-    for (int i = pos; i < size; i++) {
-        newArr[i + 1] = arr[i];
-    }
-    return newArr;
-}
-
-// 6. Реверс.
-// Дана сигнатура функции: void reverse (int arr[]);
-// Необходимо реализовать функцию таким образом, чтобы он изменял массив arr.
-// После проведенных изменений массив должен быть записан задом-наперед.
-// Пример:
-// arr=[1,2,3,4,5]
-// результат: arr=[5,4,3,2,1]
-
-void reverse(int arr[], int size) {
-    for (int i = 0; i < size / 2; i++) {
-        int temp = arr[i];
-        arr[i] = arr[size - 1 - i];
-        arr[size - 1 - i] = temp;
-    }
-}
-
-// 8. Объединение.
-// Дана сигнатура функции: int * concat (int arr1[],int arr2[]);
-// Необходимо реализовать функцию таким образом, чтобы она возвращала новый
-// массив, в котором сначала идут элементы первого массива (arr1), а затем второго
-// (arr2).
-// Пример:
-// arr1=[1,2,3]
-// arr2=[7,8,9]
-// результат: [1,2,3,7,8,9]
-
-int* concat(int arr1[], int size1, int arr2[], int size2) {
-    int* newArr = new int[size1 + size2];
-    for (int i = 0; i < size1; i++) newArr[i] = arr1[i];
-    for (int i = 0; i < size2; i++) newArr[size1 + i] = arr2[i];
-    return newArr;
-}
-
-// 10. Удалить негатив.
-// Дана сигнатура функции: int * deleteNegative (int arr[]);
-// Необходимо реализовать функцию таким образом, чтобы она возвращала новый
-// массив, в котором записаны все элементы массива arr кроме отрицательных.
-// Пример:
-// arr=[1,2,-3,4,-2,2,-5]
-// результат: [1,2,4,2]
-
-int* deleteNegative(int arr[], int size, int &newSize) {
-    newSize = 0;
-    for (int i = 0; i < size; i++) {
-        if (arr[i] >= 0) newSize++;
-    }
-
-    int* newArr = new int[newSize];
-    int index = 0;
-    for (int i = 0; i < size; i++) {
-        if (arr[i] >= 0) {
-            newArr[index] = arr[i];
-            index++;
-        }
-    }
-    return newArr;
-}
-
 int main() {
     while (true) {
         cout << "\nМеню:\n";
@@ -467,10 +386,6 @@ int main() {
         cout << "14. Левый треугольник.\n";
         cout << "15. Угадайка.\n";
         cout << "16. Поиск последнего значения\n";
-        cout << "17. Добавление в массив\n";
-        cout << "18. Реверс\n";
-        cout << "19. Объединение\n";
-        cout << "20. Удалить негатив\n";
         cout << "0. Выход\n";
 
         int choice;
@@ -614,77 +529,6 @@ int main() {
                 int index = findLast(arr, n, x);
                 if (index == -1) cout << "Число не найдено в массиве" << endl;
                 else cout << "Последнее вхождение числа " << x << " в массиве: " << index << endl;
-                break;
-            }
-
-            case 17: {
-                int n;
-                cout << "Введите размер массива: "; cin >> n;
-                int arr[100];
-                for (int i = 0; i < n; i++) {
-                    cout << "arr[" << i << "] = "; cin >> arr[i];
-                }
-                int x, pos;
-                cout << "Введите число для вставки: "; cin >> x;
-                cout << "Введите позицию для вставки (0-" << n << "): "; cin >> pos;
-                if (pos < 0 || pos > n) {
-                    cout << "Неверная позиция!" << endl;
-                    break;
-                }
-                int* newArr = add(arr, n, x, pos);
-                cout << "Новый массив: ";
-                for (int i = 0; i < n + 1; i++) cout << newArr[i] << " ";
-                cout << endl;
-                delete[] newArr; // освобождаем память
-                break;
-            }
-            case 18: {
-                int n;
-                cout << "Введите размер массива: "; cin >> n;
-                int arr[100];
-                for (int i = 0; i < n; i++) {
-                    cout << "arr[" << i << "] = "; cin >> arr[i];
-                }
-                reverse(arr, n);
-                cout << "Массив задом-наперед: ";
-                for (int i = 0; i < n; i++) cout << arr[i] << " ";
-                cout << endl;
-                break;
-            }
-
-            case 19: {
-                int n1, n2;
-                cout << "Введите размер первого массива: "; cin >> n1;
-                int arr1[100];
-                for (int i = 0; i < n1; i++) {
-                    cout << "arr1[" << i << "] = "; cin >> arr1[i];
-                }
-                cout << "Введите размер второго массива: "; cin >> n2;
-                int arr2[100];
-                for (int i = 0; i < n2; i++) {
-                    cout << "arr2[" << i << "] = "; cin >> arr2[i];
-                }
-                int* newArr = concat(arr1, n1, arr2, n2);
-                cout << "Объединённый массив: ";
-                for (int i = 0; i < n1 + n2; i++) cout << newArr[i] << " ";
-                cout << endl;
-                delete[] newArr;
-                break;
-            }
-
-            case 20: {
-                int n;
-                cout << "Введите размер массива: "; cin >> n;
-                int arr[100];
-                for (int i = 0; i < n; i++) {
-                    cout << "arr[" << i << "] = "; cin >> arr[i];
-                }
-                int newSize;
-                int* newArr = deleteNegative(arr, n, newSize);
-                cout << "Массив без отрицательных: ";
-                for (int i = 0; i < newSize; i++) cout << newArr[i] << " ";
-                cout << endl;
-                delete[] newArr; // освобождаем память
                 break;
             }
 
